@@ -172,6 +172,22 @@ async function getTikTokTrends(niche) {
   }
 }
 
+// Maps broad health niches to food terms Spoonacular understands
+const NICHE_FOOD_MAP = {
+  "gut health":          "probiotic fermented fiber",
+  "anti-inflammatory":   "turmeric ginger anti-inflammatory",
+  "hormonal health":     "flaxseed cruciferous phytoestrogen",
+  "weight loss":         "low calorie high protein",
+  "immune health":       "vitamin c zinc immune boosting",
+};
+
+function foodQueryFor(niche) {
+  const key = Object.keys(NICHE_FOOD_MAP).find(k =>
+    niche.toLowerCase().includes(k)
+  );
+  return NICHE_FOOD_MAP[key] || niche;
+}
+
 // ─── Spoonacular real recipes ─────────────────────────────────────
 async function getSpoonacularRecipes(niche) {
   const API_KEY = process.env.SPOONACULAR_API_KEY;
@@ -183,7 +199,7 @@ async function getSpoonacularRecipes(niche) {
   try {
     const res = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
       params: {
-        query: niche,
+        query: foodQueryFor(niche),
         number: 6,
         addRecipeInformation: true,
         sort: "popularity",
