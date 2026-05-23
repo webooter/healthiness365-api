@@ -219,7 +219,11 @@ async function getSpoonacularRecipes(niche) {
       diets: r.diets || [],
     }));
 
-    return { source: "spoonacular", data: recipes };
+    return {
+      source: "spoonacular",
+      data: recipes,
+      _debug: { searchedFor: foodQueryFor(niche), totalResults: res.data.totalResults, status: res.status },
+    };
   } catch (err) {
     return { source: "spoonacular", error: err.message, data: [] };
   }
