@@ -1,10 +1,13 @@
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new OpenAI({
-  baseURL: "https://api.deepseek.com",
-  apiKey:  process.env.DEEPSEEK_API_KEY,
-});
+// Lazy init — avoids SDK key validation at build time
+function getClient() {
+  return new OpenAI({
+    baseURL: "https://api.deepseek.com",
+    apiKey:  process.env.DEEPSEEK_API_KEY ?? "",
+  });
+}
 
 const SYSTEM = `You are a certified nutritionist and culinary expert specialising in anti-inflammatory diets.
 Your meal plans are practical, delicious, culturally diverse, and backed by nutritional science.
@@ -51,7 +54,7 @@ Return ONLY valid JSON in exactly this structure:
 Generate all 7 days (Monday through Sunday).`;
 
   try {
-    const response = await client.chat.completions.create({
+    const response = await getClient().chat.completions.create({
       model:      "deepseek-chat",
       max_tokens: 4096,
       messages: [
