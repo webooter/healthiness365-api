@@ -174,11 +174,11 @@ async function getTikTokTrends(niche) {
 
 // Maps broad health niches to food terms Spoonacular understands
 const NICHE_FOOD_MAP = {
-  "gut health":          "probiotic fermented fiber",
-  "anti-inflammatory":   "turmeric ginger anti-inflammatory",
-  "hormonal health":     "flaxseed cruciferous phytoestrogen",
-  "weight loss":         "low calorie high protein",
-  "immune health":       "vitamin c zinc immune boosting",
+  "gut health":        "kimchi",
+  "anti-inflammatory": "turmeric",
+  "hormonal health":   "flaxseed",
+  "weight loss":       "low calorie",
+  "immune health":     "elderberry",
 };
 
 function foodQueryFor(niche) {
